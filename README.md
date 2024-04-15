@@ -2,7 +2,7 @@
 
 Hi, I'am Rido, **Software Engineer**.
 
-Here's the code for address-bok youtube.
+Here's the code for address-book.
 
 ## Projects
 
