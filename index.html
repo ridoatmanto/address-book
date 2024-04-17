@@ -21,7 +21,7 @@
       <div
         class="grid-cols-1 flex justify-center border-rose-50 border-b-4 lg:border-0 lg:pb-0 pb-4 px-4"
       >
-        <form action="" class="sm:w-full max-w-lg roboto-medium">
+        <form action="POST" class="sm:w-full max-w-lg roboto-medium">
           <h1 class="text-center roboto-regular text-2xl mb-4">Address Book</h1>
 
           <div class="md:flex md:items-center mb-4">
@@ -97,7 +97,7 @@
             <div class="md:w-2/3">
               <button
                 class="roboto-medium text-sm text-bold bg-[#D9D9D9] hover:bg-[#ccc] focus:shadow-outline focus:outline-none px-2 py-1 my-2 rounded"
-                type="button"
+                type="submit"
               >
                 Add Contact
               </button>
@@ -116,7 +116,7 @@
             />
             <button
               class="roboto-medium bg-[#D9D9D9] hover:bg-[#ccc] focus:shadow-outline focus:outline-none px-2 py-1 rounded text-sm"
-              type="button"
+              type="submit"
             >
               Search
             </button>
@@ -160,7 +160,9 @@
                   <span class="block italic mt-1">Ronaldinho@gmail.com</span>
                 </td>
 
-                <td class="px-2 hidden lg:inline-block pt-2">+321</td>
+                <td class="px-2 hidden lg:inline-block pt-2 text-center">
+                  +321
+                </td>
                 <td class="border-2 px-2 text-center">44</td>
                 <td class="border-2 text-center">
                   <button
@@ -177,7 +179,9 @@
                   Ricardo Kaka
                   <span class="block italic mt-1">kaka@gmail.com</span>
                 </td>
-                <td class="hidden lg:inline-block pt-2">+333</td>
+                <td class="px-2 hidden lg:inline-block pt-2 text-center">
+                  +333
+                </td>
                 <td class="border-2 px-2 text-center">41</td>
                 <td class="border-2 text-center">
                   <button
