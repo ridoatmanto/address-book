@@ -44,22 +44,24 @@ const contacts = [
     birthday: new Date("1982-4-22"),
   },
 ];
-console.log("JavaScript is running!");
 
-for (let index = 0; index < contacts.length; index++) {
-  const contact = contacts[index];
-  const isAlive = contact.isAlive === true ? "Still Alive" : "Rest in Peace";
+function renderContacts() {
+  for (let index = 0; index < contacts.length; index++) {
+    const contact = contacts[index];
+    const isAlive = contact.isAlive === true ? "Still Alive" : "Rest in Peace";
 
-  const completeProfile = `
-  ${contact.fullName} (${contact.nickName}) is ${contact.age} years old.
-  
-  Email: ${contact.email}
-  Phone: ${contact.phone}
-  Birthday: ${contact.birthday}
-
-  Address: ${contact.address}
-
-  ${isAlive}!
-  *********************************`;
-  console.log(completeProfile);
+    const completeProfile = `
+    ${contact.fullName} (${contact.nickName}) is ${contact.age} years old.
+    
+    Email: ${contact.email}
+    Phone: ${contact.phone}
+    Birthday: ${contact.birthday}
+    
+    Address: ${contact.address}
+    
+    ${isAlive}!
+    *********************************`;
+    console.log(completeProfile);
+  }
 }
+renderContacts();
