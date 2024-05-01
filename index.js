@@ -82,8 +82,35 @@ function addContact() {
 
   // use splat instead to make ne variable from contacts array
   contacts = [...contacts, newContact];
-  console.log(`New Player Added : ${newContact.nickName}!`);
+  console.log(`New Contact Added: ${newContact.nickName}!`);
 }
 
-addContact();
-renderContacts();
+function searchContacts(keyword) {
+  const searchedContacts = contacts.filter((contact) => {
+    return contact.fullName
+      .toLocaleLowerCase()
+      .includes(keyword.toLocaleLowerCase());
+  });
+  console.log(searchedContacts);
+}
+
+function getContactById(id) {
+  const contact = contacts.find((contact) => {
+    return contact.id === id;
+  });
+  console.log(contact);
+}
+
+function deleteContactById(id) {
+  const latestContacts = contacts.filter((contact) => {
+    return contact.id !== id;
+  });
+  console.log(`ID: ${id} deleted!`);
+  console.log(latestContacts);
+}
+
+// addContact();
+// renderContacts();
+// searchContacts("to");
+// getContactById(3);
+deleteContactById(1);
