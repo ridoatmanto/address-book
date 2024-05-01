@@ -1,4 +1,4 @@
-const contacts = [
+let contacts = [
   {
     id: 1,
     fullName: "Edson Arantes do Nascimento",
@@ -64,4 +64,26 @@ function renderContacts() {
     console.log(completeProfile);
   }
 }
+
+function addContact() {
+  const newContact = {
+    id: 5,
+    fullName: "Roberto Carlos da Silva Rocha",
+    nickName: "Carlos",
+    email: "carlos@gmail.com",
+    phone: "+23-222222",
+    age: 51,
+    isAlive: true,
+    address: "Garça, São Paulo, Brazil",
+    birthday: new Date("1973-04-10"),
+  };
+
+  // contacts.push(newContact); // using push will change data directly
+
+  // use splat instead to make ne variable from contacts array
+  contacts = [...contacts, newContact];
+  console.log(`New Player Added : ${newContact.nickName}!`);
+}
+
+addContact();
 renderContacts();
