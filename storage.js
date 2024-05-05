@@ -1,10 +1,10 @@
 function initContacts() {
-  console.log("Init contacts");
-  localStorage.setItem("contacts", JSON.stringify(contacts));
+  if (!localStorage.getItem("contacts")) {
+    updateContacts(contacts);
+  }
 }
 
 function loadContacts() {
-  console.log("Load all contacts");
   const contacts = localStorage.getItem("contacts");
   return JSON.parse(contacts);
 }
@@ -13,13 +13,16 @@ function getContactById(id) {
   const contact = contacts.find((contact) => {
     return contact.id === id;
   });
-  console.log(`Load contact with ID: ${id}`);
-
-  console.log(contact);
 }
 
-function saveContact(contact) {
-  console.log(`Save contact: ${contact}`);
+function addContact(contact) {
+  const currentContacts = loadContacts();
+  const updatedContacts = [...currentContacts, contact];
+  updateContacts(updatedContacts);
+}
+
+function updateContacts(contacts) {
+  localStorage.setItem("contacts", JSON.stringify(contacts));
 }
 
 function deleteContactById(id) {
@@ -27,7 +30,5 @@ function deleteContactById(id) {
   const latestContacts = currentContacts.filter((contact) => {
     return contact.id !== id;
   });
-  console.log(`ID: ${id} deleted!`);
-  console.log(latestContacts);
-  localStorage.setItem("contacts", JSON.stringify(latestContacts));
+  updateContacts(latestContacts);
 }
