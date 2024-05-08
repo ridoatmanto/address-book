@@ -36,15 +36,12 @@ function renderContacts() {
               <td class="border-2 px-2">${contact.phone}</td>
               <td class="border-2 text-center">
                 <a
-                    class="roboto-medium text-xs lg:font-bold bg-[#D9D9D9] hover:bg-[#ccc] focus:shadow-outline focus:outline-none lg:px-2 px-1 py-1 my-2 mx-2 rounded"
-                    href="/contact/edit.html?id=${contact.id}"
-                  >
-                    Edit
-                  </a>  
-                <button
                   class="roboto-medium text-xs lg:font-bold bg-[#D9D9D9] hover:bg-[#ccc] focus:shadow-outline focus:outline-none lg:px-2 px-1 py-1 my-2 mx-2 rounded"
-                  onClick="deleteById(${contact.id})"
-                >
+                  href="/contact/edit.html?id=${contact.id}">
+                  Edit
+                </a>
+                <button class="roboto-medium text-xs lg:font-bold bg-[#D9D9D9] hover:bg-[#ccc] focus:shadow-outline focus:outline-none lg:px-2 px-1 py-1 my-2 mx-2 rounded"
+                  onClick="deleteById(${contact.id}, '${contact.fullName}')">
                   Delete
                 </button>
               </td></tr>`;
@@ -76,8 +73,9 @@ function addContact(event) {
   alert(`Contact: "${newContact.fullName}" saved!.`);
 }
 
-function deleteById(id) {
+function deleteById(id, fullName) {
   deleteContactById(id);
+  alert(`Contact: "${fullName}" deleted!.`);
   renderContacts();
 }
 addContactFormElement.addEventListener("submit", addContact);
