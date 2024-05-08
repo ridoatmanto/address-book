@@ -15,20 +15,13 @@ function renderContactById() {
     alert(`Contact ID: ${contactId} not found.`);
     return;
   }
-
-  const today = new Date();
-  const bornDate = new Date(contact.birthday);
-  const age = today.getFullYear() - bornDate.getFullYear();
-
-  document.getElementById("inline-full-name").innerText = contact.fullName;
-  document.getElementById("inline-nick-name").innerText = contact.nickName;
-  document.getElementById("inline-full-email").innerText = contact.email;
-  document.getElementById("inline-full-phone").innerText = contact.phone;
-  document.getElementById("inline-full-birthday").innerText = new DateFormatter(
-    contact.birthday
-  ).getFormattedDate();
-  document.getElementById("inline-full-age").innerText = age + " years old";
-  document.getElementById("inline-full-address").innerText = contact.address;
+  console.log(contact);
+  document.getElementById("inline-full-name").value = contact.fullName;
+  document.getElementById("inline-nick-name").value = contact.nickName;
+  document.getElementById("inline-full-email").value = contact.email;
+  document.getElementById("inline-full-phone").value = contact.phone;
+  document.getElementById("inline-full-birthday").value = contact.birthday;
+  document.getElementById("inline-full-address").value = contact.address;
 }
 
 function updateContact(event) {
@@ -53,12 +46,7 @@ function updateContact(event) {
   alert(`Contact: "${updatedContact.fullName}" updated!.`);
 }
 
-function editContact() {
-  const contactId = getCurrentContactId();
-  window.location.href = `/contact/edit.html?id=${contactId}`;
-}
-
 document
-  .getElementById("edit-contact-button")
-  .addEventListener("click", editContact);
+  .getElementById("edit-contact-form")
+  .addEventListener("submit", updateContact);
 renderContactById();

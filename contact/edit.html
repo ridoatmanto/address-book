@@ -15,13 +15,14 @@
   </head>
 
   <body class="flex justify-center py-4 lg:pt-14 bg-rose-50">
-    <main
-      class="lg:pt-6 pt-4 bg-white rounded-lg max-w-4xl grid lg:grid-cols-2 grid-cols-1 gap-1"
-    >
+    <main class="lg:pt-6 pt-4 bg-white rounded-lg max-w-4xl">
       <div class="justify-center border-b-4 lg:border-0 lg:pb-0 pb-4 px-4">
+        <p class="text-center mb-4">
+          <a href="../" class="hover:underline">Back to Dashboard</a>
+        </p>
         <form
           method="post"
-          id="add-contact-form"
+          id="edit-contact-form"
           class="sm:w-full max-w-lg roboto-medium"
         >
           <h1 class="text-center roboto-regular text-2xl mb-4">Address Book</h1>
@@ -41,7 +42,6 @@
                 name="fullName"
                 type="text"
                 placeholder="Mark Doe"
-                required
               />
             </div>
           </div>
@@ -49,7 +49,7 @@
             <div class="md:w-1/3">
               <label
                 class="block text-gray-500 font-bold lg:text-right text-left mb-1 md:mb-0 pr-4"
-                for="inline-full-name"
+                for="inline-nick-name"
                 >Nick Name</label
               >
             </div>
@@ -60,7 +60,6 @@
                 name="nickName"
                 type="text"
                 placeholder="Mark"
-                required
               />
             </div>
           </div>
@@ -79,7 +78,6 @@
                 name="email"
                 type="email"
                 placeholder="Mark@doe.com"
-                required
               />
             </div>
           </div>
@@ -98,7 +96,6 @@
                 name="phone"
                 type="tel"
                 placeholder="+4323432"
-                required
               />
             </div>
           </div>
@@ -117,7 +114,6 @@
                 name="birthday"
                 type="date"
                 placeholder="yyyy-mm-dd"
-                required
               />
             </div>
           </div>
@@ -134,71 +130,26 @@
                 class="bg-[#E5E5E5] appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                 id="inline-full-address"
                 name="address"
-                placeholder="Address here..."
-                required
+                placeholder="Your address..."
               ></textarea>
             </div>
           </div>
           <div class="md:flex md:items-center">
-            <div class="md:w-1/3 min-w-[65px]"></div>
-            <div class="md:w-2/3 min-w-[155px]">
+            <div class="md:w-1/3"></div>
+            <div class="md:w-2/3">
               <button
-                class="inline-block roboto-medium text-sm text-bold bg-[#D9D9D9] hover:bg-[#ccc] focus:shadow-outline focus:outline-none px-4 py-2 my-2 mr-2 rounded"
+                class="roboto-medium text-sm text-bold bg-[#D9D9D9] hover:bg-[#ccc] focus:shadow-outline focus:outline-none px-4 py-2 my-2 rounded"
                 type="submit"
               >
-                ADD
+                UPDATE
               </button>
-              <input
-                class="inline-block roboto-medium text-sm text-bold hover:underline px-4 py-2 my-2 rounded"
-                type="reset"
-                value="RESET"
-              />
             </div>
           </div>
         </form>
       </div>
 
-      <div class="lg:col-span-2 px-4">
-        <div class="mt-4">
-          <form
-            id="search-contacts-form"
-            method="get"
-            class="roboto-medium mb-4"
-          >
-            <input
-              class="bg-[#E5E5E5] appearance-none border-2 border-gray-200 mb-1 md:mb-0 rounded w-80% px-2 py-1 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-              id="search-name"
-              name="search"
-              type="text"
-              placeholder="Type name here..."
-            />
-            <button
-              class="roboto-medium bg-[#D9D9D9] hover:bg-[#ccc] focus:shadow-outline focus:outline-none px-2 py-1 rounded text-sm"
-              type="submit"
-              id="search-button"
-            >
-              Search
-            </button>
-          </form>
-        </div>
-
-        <div>
-          <table id="contacts-table" class="table-auto border-collapse">
-            <thead>
-              <tr class="border-2 bg-zinc-100 text-sm">
-                <th class="border-2 px-2">#</th>
-                <th class="border-2 px-2">Full Name</th>
-                <th class="border-2 px-2">Phone</th>
-                <th class="border-2 lg:px-5 px-2 py-2">Action</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
-
       <footer
-        class="lg:col-span-3 roboto-regular border-rose-50 border-t-4 mt-6 pt-2 pb-2 text-xs text-center text-[#464646]"
+        class="lg:col-span-2 roboto-regular border-rose-50 border-t-4 mt-6 pt-2 pb-2 text-xs text-center text-[#464646]"
       >
         <a
           href="http://ridoatmanto.com"
@@ -209,8 +160,7 @@
         &copy; 2024
       </footer>
     </main>
-    <script src="contacts.js"></script>
-    <script src="storage.js"></script>
-    <script src="index.js"></script>
+    <script src="../storage.js"></script>
+    <script src="edit.js"></script>
   </body>
 </html>

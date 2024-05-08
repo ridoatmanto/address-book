@@ -27,18 +27,17 @@ function renderContacts() {
     const rowItem = `<tr class="border-2 hover:bg-cyan-100 text-md">
               <td class="border-2 px-2 text-center">${index + 1}</td>
               <td class="border-2 px-2">
-                ${contact.fullName}<span class="block italic mt-1"
-                  >${contact.email}</span
-                >
+                <a
+                  class="roboto-medium text-sm font-bold hover:underline text-blue-600/75"
+                  href="/contact/?id=${contact.id}"
+                >${contact.fullName}</a>
+                <span class="block italic mt-1">${contact.email}</span>
               </td>
-              <td class="border-2 hidden lg:block px-2 pt-2">${
-                contact.phone
-              }</td>
-              <td class="border-2 px-2 text-center">${contact.age}</td>
+              <td class="border-2 px-2">${contact.phone}</td>
               <td class="border-2 text-center">
                 <a
                     class="roboto-medium text-xs lg:font-bold bg-[#D9D9D9] hover:bg-[#ccc] focus:shadow-outline focus:outline-none lg:px-2 px-1 py-1 my-2 mx-2 rounded"
-                    href="/contact/?id=${contact.id}"
+                    href="/contact/edit.html?id=${contact.id}"
                   >
                     Edit
                   </a>  
@@ -63,13 +62,15 @@ function addContact(event) {
   const newContact = {
     id: contacts.length + 1,
     fullName: contactFormData.get("fullName"),
+    nickName: contactFormData.get("nickName"),
     email: contactFormData.get("email"),
     phone: contactFormData.get("phone"),
-    age: contactFormData.get("age"),
+    birthday: contactFormData.get("birthday"),
+    address: contactFormData.get("address"),
   };
-  console.log(newContact);
+
   const latestContacts = [...contacts, newContact];
-  updateContacts(latestContacts);
+  updateContacts(latestContacts.reverse());
   addContactFormElement.reset();
   renderContacts();
   alert(`Contact: "${newContact.fullName}" saved!.`);
@@ -80,4 +81,5 @@ function deleteById(id) {
   renderContacts();
 }
 addContactFormElement.addEventListener("submit", addContact);
+window.addEventListener("load", initContacts());
 window.addEventListener("load", renderContacts());
