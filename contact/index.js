@@ -1,34 +1,153 @@
-function getCurrentContactId() {
-  const queryString = window.location.search;
-  const params = new URLSearchParams(queryString);
-  const contactId = Number(params.get("id"));
+const contactLabel = {
+  fullName: "Full Name",
+  nickName: "Nick Name",
+  email: "Email Address",
+  phone: "Phone",
+  birthday: "Birthday",
+  age: "Age",
+  address: "Address",
+};
 
-  return contactId;
-}
+const contactInputId = {
+  fullName: { id: "full-name", inputType: "text" },
+  nickName: { id: "nick-name", inputType: "text" },
+  email: { id: "email", inputType: "email" },
+  phone: { id: "phone", inputType: "tel" },
+  birthday: { id: "birthday", inputType: "date" },
+};
 
-function renderContactById() {
+function renderDetailContactById() {
   const contactId = getCurrentContactId();
   const contacts = loadContacts();
   const contact = contacts.find((contact) => contact.id === contactId);
 
-  if (contact.length === 0) {
-    alert(`Contact ID: ${contactId} not found.`);
-    return;
-  }
+  let contactFields = "";
 
-  const today = new Date();
-  const bornDate = new Date(contact.birthday);
-  const age = today.getFullYear() - bornDate.getFullYear();
+  Object.keys(contactLabel).forEach((key) => {
+    let value = contact[key];
 
-  document.getElementById("inline-full-name").innerText = contact.fullName;
-  document.getElementById("inline-nick-name").innerText = contact.nickName;
-  document.getElementById("inline-full-email").innerText = contact.email;
-  document.getElementById("inline-full-phone").innerText = contact.phone;
-  document.getElementById("inline-full-birthday").innerText = new DateFormatter(
-    contact.birthday
-  ).getFormattedDate();
-  document.getElementById("inline-full-age").innerText = age + " years old";
-  document.getElementById("inline-full-address").innerText = contact.address;
+    if (key === "age") {
+      const today = new Date();
+      const bornDate = new Date(contact["birthday"]);
+      value = today.getFullYear() - bornDate.getFullYear();
+      value += " years old.";
+    }
+
+    if (key === "birthday") {
+      value = new DateFormatter(value).getFormattedDate();
+    }
+
+    contactFields += `<div class="md:flex md:items-center mb-4">
+        <div class="md:w-1/3">
+          <label
+            class="block text-gray-500 font-bold lg:text-right text-left mb-1 md:mb-0 pr-4"
+            for="inline-full-name"
+            >${contactLabel[key]}</label
+          >
+        </div>
+        <div class="md:w-2/3 text-gray-500">${value}</div>
+      </div>`;
+  });
+
+  document.getElementById("detail-contact").innerHTML =
+    contactFields +
+    `<div class="md:flex md:items-center">
+       <div class="md:w-1/3"></div>
+       <div class="md:w-2/3">
+         <button
+           id="edit-contact-button"
+           class="roboto-medium text-sm text-bold bg-[#D9D9D9] hover:bg-[#ccc] focus:shadow-outline focus:outline-none px-4 py-2 my-2 rounded"
+           onClick="renderEditFormContactById()">
+          EDIT
+        </button>
+       </div>
+     </div>`;
+}
+
+function renderEditFormContactById() {
+  const contactId = getCurrentContactId();
+  const contacts = loadContacts();
+  const contact = contacts.find((contact) => contact.id === contactId);
+
+  let inputFields = "";
+  Object.keys(contactInputId).forEach((key) => {
+    let value = contact[key];
+
+    if (key !== "age") {
+      inputFields += `
+        <div class="md:flex md:items-center mb-4">
+          <div class="md:w-1/3">
+            <label
+              class="block text-gray-500 font-bold lg:text-right text-left mb-1 md:mb-0 pr-4"
+              for="input-${contactInputId[key]}"
+            >
+              ${contactLabel[key]}
+            </label>
+          </div>
+          <div class="md:w-2/3">
+            <input
+              class="bg-[#E5E5E5] appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+              id="input-${contactInputId[key].id}"
+              name="${key}"
+              type="${contactInputId[key].inputType}"
+              placeholder="Your ${contactLabel[key]} here..."
+              value="${value}"
+            />
+          </div>
+        </div>`;
+    }
+  });
+
+  document.getElementById("detail-contact").innerHTML =
+    `<form
+      method="post"
+      id="edit-contact-form"
+      class="sm:w-full max-w-lg roboto-medium"
+    >` +
+    inputFields +
+    `<div class="md:flex md:items-center mb-4">
+      <div class="md:w-1/3">
+        <label
+          class="block text-gray-500 font-bold lg:text-right text-left mb-1 md:mb-0 pr-4 w-100"
+          for="inline-full-address"
+        >
+          Address
+        </label>
+      </div>
+      <div class="md:w-2/3">
+        <textarea
+          class="bg-[#E5E5E5] appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+          id="inline-full-address"
+          name="address"
+          placeholder="Your address..."
+        >${contact["address"]}</textarea>
+      </div>
+    </div>
+    <div class="md:flex md:items-center">
+      <div class="md:w-1/3"></div>
+      <div class="md:w-2/3">
+        <button
+          class="roboto-medium text-sm text-bold bg-[#D9D9D9] hover:bg-[#ccc] focus:shadow-outline focus:outline-none px-4 py-2 my-2 rounded"
+          type="submit"
+        >
+          UPDATE
+        </button>
+      </div>
+    </div>
+  </form>`;
+
+  const bornDate = new Date(contact["birthday"]);
+  day = bornDate.getDate();
+  month = Number(bornDate.getMonth()) + 1;
+  year = bornDate.getFullYear();
+
+  document.getElementById(
+    "input-birthday"
+  ).innerHTML = `${year}-${month}-${day}`;
+
+  document
+    .getElementById("edit-contact-form")
+    .addEventListener("submit", updateContact);
 }
 
 function updateContact(event) {
@@ -49,16 +168,7 @@ function updateContact(event) {
   };
   const latestContacts = [...othersContacts, updatedContact];
   updateContacts(latestContacts.reverse());
-  renderContactById();
-  alert(`Contact: "${updatedContact.fullName}" updated!.`);
+  renderEditFormContactById();
 }
 
-function editContact() {
-  const contactId = getCurrentContactId();
-  window.location.href = `/contact/edit.html?id=${contactId}`;
-}
-
-document
-  .getElementById("edit-contact-button")
-  .addEventListener("click", editContact);
-renderContactById();
+renderDetailContactById();

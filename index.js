@@ -1,19 +1,11 @@
-const addContactFormElement = document.getElementById("add-contact-form");
-const searchButton = document.getElementById("search-button");
-const contactTable = document
+const contactFormElement = document.getElementById("add-contact-form");
+const contactTableELement = document
   .getElementById("contacts-table")
   .getElementsByTagName("tbody")[0];
 
-function searchContactsByName(currentContacts, keyword) {
-  const result = currentContacts.filter((contact) =>
-    contact.fullName.toLocaleLowerCase().includes(keyword.toLocaleLowerCase())
-  );
-  return result;
-}
-
 function renderContacts() {
   const contacts = loadContacts();
-  contactTable.innerHTML = "";
+  contactTableELement.innerHTML = "";
 
   const querySearch = window.location.search;
   const params = new URLSearchParams(querySearch);
@@ -23,32 +15,37 @@ function renderContacts() {
     ? searchContactsByName(contacts, keyword)
     : contacts;
 
-  const contactElements = filteredContacts.map((contact, index) => {
-    const rowItem = `<tr class="border-2 hover:bg-cyan-100 text-md">
-              <td class="border-2 px-2 text-center">${index + 1}</td>
-              <td class="border-2 px-2">
-                <a
-                  class="roboto-medium text-sm font-bold hover:underline text-blue-600/75"
-                  href="/contact/?id=${contact.id}"
-                >${contact.fullName}</a>
-                <span class="block italic mt-1">${contact.email}</span>
-              </td>
-              <td class="border-2 px-2">${contact.phone}</td>
-              <td class="border-2 text-center">
-                <a
-                  class="roboto-medium text-xs lg:font-bold bg-[#D9D9D9] hover:bg-[#ccc] focus:shadow-outline focus:outline-none lg:px-2 px-1 py-1 my-2 mx-2 rounded"
-                  href="/contact/edit.html?id=${contact.id}">
-                  Edit
-                </a>
-                <button class="roboto-medium text-xs lg:font-bold bg-[#D9D9D9] hover:bg-[#ccc] focus:shadow-outline focus:outline-none lg:px-2 px-1 py-1 my-2 mx-2 rounded"
-                  onClick="deleteById(${contact.id}, '${contact.fullName}')">
-                  Delete
-                </button>
-              </td></tr>`;
+  let allRows = `<tr class="border-2 hover:bg-cyan-100 text-md">
+    <td class="border-2 px-2 py-2 text-center italic text-xs" colspan="4">
+      Empty Contact Address
+    </td>
+  </tr>`;
 
-    let newRow = contactTable.insertRow(contactTable.rows.length);
-    newRow.innerHTML = rowItem;
-  });
+  if (filteredContacts.length > 0) {
+    allRows = "";
+    filteredContacts.forEach((contact, index) => {
+      allRows += `<tr class="border-2 hover:bg-cyan-100 text-md">
+                    <td class="border-2 px-2 text-center">${index + 1}</td>
+                    <td class="border-2 px-2">
+                      <a class="roboto-medium text-sm font-bold hover:underline text-blue-600/75"
+                        href="/contact/?id=${contact.id}"
+                      >${contact.fullName}</a>
+                      <span class="block italic mt-1">${contact.email}</span>
+                    </td>
+                    <td class="border-2 px-2">${contact.phone}</td>
+                    <td class="border-2 text-center">
+                      <a class="roboto-medium text-xs lg:font-bold bg-[#D9D9D9] hover:bg-[#ccc] focus:shadow-outline focus:outline-none lg:px-2 px-1 py-1 my-2 mx-2 rounded"
+                        href="/contact/edit.html?id=${contact.id}">Edit</a>
+                      <button class="roboto-medium text-xs lg:font-bold bg-[#D9D9D9] hover:bg-[#ccc] focus:shadow-outline focus:outline-none lg:px-2 px-1 py-1 my-2 mx-2 rounded"
+                      onClick="deleteById(${contact.id}, '${
+        contact.fullName
+      }')">Delete</button>
+                    </td>
+                  </tr>`;
+    });
+  }
+
+  contactTableELement.innerHTML = allRows;
 }
 
 function addContact(event) {
@@ -68,16 +65,14 @@ function addContact(event) {
 
   const latestContacts = [...contacts, newContact];
   updateContacts(latestContacts.reverse());
-  addContactFormElement.reset();
+  contactFormElement.reset();
   renderContacts();
-  alert(`Contact: "${newContact.fullName}" saved!.`);
 }
 
 function deleteById(id, fullName) {
   deleteContactById(id);
-  alert(`Contact: "${fullName}" deleted!.`);
   renderContacts();
 }
-addContactFormElement.addEventListener("submit", addContact);
-window.addEventListener("load", initContacts());
+
+contactFormElement.addEventListener("submit", addContact);
 window.addEventListener("load", renderContacts());
